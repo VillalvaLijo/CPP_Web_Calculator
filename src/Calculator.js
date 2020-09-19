@@ -88,8 +88,8 @@ class Calculator extends React.Component {
             this.state.numbers[0],
             this.state.numbers[1],
             this.state.operation,
-            (this.state.result)=>{
-                this.setResult(this.state.result);
+            (result)=>{
+                this.setResult(result);
 
         });
     }
