@@ -7,6 +7,7 @@ function CalculatorButton(props){
             type ='button'
             value={ props.caption}
             className={props.caption === "=" ? "calculator-equal-button": null}
+            onClick={props.onClick}
         />
     );
 }
