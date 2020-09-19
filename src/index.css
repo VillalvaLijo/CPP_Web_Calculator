@@ -23,3 +23,7 @@ code {
 .calculator-equal-button{
   grid-column: 1/span 4;
 }
+
+.calculator-display {
+  grid-column: 1/span 4;
+}
