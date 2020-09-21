@@ -4,6 +4,10 @@
 
 #include "CalcResourceFactory.h"
 
+#include <sstream>
+#include <iomanip>
+#include <json.hpp>
+
 ClacResourceFactory::CalcResourceFactory(){
     _resource = make_shared<Resource>();
     _resource->set_path(
@@ -42,9 +46,23 @@ tuple<float, float, string> CalcResourceFactory::get_path_parameters(
             return make_tuple(num1, num2, operation);
 }
 
+string CalcResourceFactory::to_json(float result){
+    ostringstream str_stream;
+    str_stream << result;
+    nlohmann::json jsonResult = {
+            {"result", str_stream.str()}
+    };
+    return jsonResult.dump();
+}
+
+shared_ptr<Resource> CalcResourceFactory::get_resource() const {
+    return _resource;
+}
 
 void CalcResourceFactory::get_handler(const shared_ptr<Session> session){
     const auto [num1, num2, operation] = get_path_parameters(session);
     const auto result = calculate(num1, num2, operation);
+    auto content = to_json(result);
+    session->close(OK, content, {{"Content-Length", to_string(content.size())}});
 }
 
